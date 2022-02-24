@@ -1,0 +1,18 @@
+<div class="home">
+  <div>Answer: {{ answer["symbol"] }} (testing purposes)</div>
+  <form class="input-form">
+    <mat-form-field appearance="fill" class="input-form-mat">
+      <mat-label>Element</mat-label>
+      <input matInput [formControl]="inputFormControl" placeholder="Na" />
+      <!--<mat-error *ngIf="inputFormControl.hasError('overWordCount')">
+        Must be 100 words or less
+      </mat-error>-->
+    </mat-form-field>
+  </form>
+
+  <button [disabled]="inputFormControl.invalid" (click)="guess()">Guess</button>
+  <br /><br />
+  <div>{{ result }}</div>
+
+  <button *ngIf="success" (click)="tryAgain()">Try Again</button>
+</div>
