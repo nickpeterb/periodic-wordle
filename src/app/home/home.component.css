@@ -1,3 +1,56 @@
 .home {
-  margin: 2rem;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.guessesLeft {
+  margin-top: 15px;
+}
+
+.guessesLeft span {
+  background-color: black;
+  color: white;
+  padding: 1px 5px;
+  border-radius: 50%;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid lightgray;
+  font-size: 20vh;
+  width: 2em;
+  max-width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+input::placeholder {
+  text-align: center;
+}
+
+input:placeholder-shown {
+  text-align: left;
+}
+
+input:focus {
+  outline: 0 !important;
+}
+
+button {
+  margin: 1rem;
+  background-color: whitesmoke;
+  color: black;
+  padding: 0.5rem 2rem;
+  border: 1px solid grey;
+  border-radius: 2rem;
+  font-size: large;
+}
+
+button:active {
+  background-color: rgb(233, 231, 231);
+}
+
+button:disabled {
+  opacity: 0.5;
 }

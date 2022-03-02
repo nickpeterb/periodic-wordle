@@ -1,0 +1,12 @@
+.nav {
+  width: 100vw;
+  font-size: large;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  border-bottom: 2px solid black;
+}
+
+.app-body {
+  padding: 0 15px;
+}
