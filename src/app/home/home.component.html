@@ -1,30 +1,40 @@
 <div class="home">
   <div class="answers">
-    <div
-      class="ansBox"
-      *ngFor="let _ of [].constructor(totalGuesses); let i = index"
-      [ngStyle]="{ 'background-color': guesses[i]?.color }"
-    >
-      {{ guesses[i]?.symbol }}
+    <div *ngFor="let _ of [].constructor(totalGuesses); let i = index">
+      <div class="ansBox" [ngStyle]="{ 'background-color': guesses[i]?.color }">
+        {{ guesses[i]?.symbol }}
+      </div>
+      <div
+        *ngIf="guesses[i]"
+        style="margin-bottom: 1rem"
+        [ngClass]="{
+          'green-text': guesses[i]?.category === answer.category
+        }"
+      >
+        <div *ngIf="guesses[i].number < answer.number" class="mass-hint">
+          Low
+        </div>
+        <div *ngIf="guesses[i].number > answer.number" class="mass-hint">
+          High
+        </div>
+      </div>
     </div>
   </div>
 
-  <div *ngIf="closestMassElem">
-    Closest Mass: {{ closestMassElem.name }} ({{ closestMassElem.mass }} u)
-  </div>
+  <div class="result">{{ result }}</div>
 
   <form class="input-form" id="input-form" (keydown.enter)="guess($event)">
     <div>
       <div class="suggested" *ngIf="suggestedElem" (click)="focusInput()">
-        <span class="number" *ngIf="suggestedElem.number">{{
+        <span class="number" *ngIf="suggestedElem.number >= 0">{{
           suggestedElem.number
         }}</span>
         <span class="cat">{{ suggestedElem.category }}</span>
         <div class="name-wrap">
           <span class="name">{{ suggestedElem.name }}</span>
-          <span class="mass" *ngIf="suggestedElem.mass >= 0"
+          <!--<span class="mass" *ngIf="suggestedElem.mass >= 0"
             >{{ suggestedElem.mass }}u</span
-          >
+          >-->
         </div>
       </div>
       <div
@@ -35,7 +45,7 @@
           id="elem-input"
           [formControl]="inputFormControl"
           (ngModelChange)="onChange($event)"
-          placeholder=""
+          placeholder="Na"
         />
       </div>
     </div>
@@ -50,6 +60,5 @@
     Guess
   </button>
 
-  <div>{{ result }}</div>
   <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
 </div>

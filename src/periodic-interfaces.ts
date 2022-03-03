@@ -1,8 +1,8 @@
 export interface Element {
-  mass: number;
+  mass?: number;
   category: string;
   name: string;
-  number?: number;
+  number: number;
   symbol?: string;
   color?: string;
 }

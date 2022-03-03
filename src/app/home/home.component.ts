@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { elements } from 'src/assets/elements';
-import { PeriodicTable } from 'src/assets/PeriodicTable';
+//import { PeriodicTable } from 'src/assets/PeriodicTable';
 import { symbols } from 'src/assets/symbols';
 import { Element } from 'src/periodic-interfaces';
 
@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit {
   totalGuesses: number = 10;
   guessesLeft: number = this.totalGuesses;
   guesses: Element[] = [];
-  closestMassDiff: number = 0;
-  closestMassElem!: Element;
   suggestedElem: Element | null = null;
 
   constructor() {
@@ -32,6 +30,7 @@ export class HomeComponent implements OnInit {
       name: 'Start typing...',
       mass: -1,
       category: '',
+      number: -1,
     };
     this.focusInput();
   }
@@ -60,8 +59,8 @@ export class HomeComponent implements OnInit {
       this.result = 'You got it!';
       this.isDone = true;
     } else {
-      const answerMass: number = this.answer.mass;
-      const guessMass: number = guessElem.mass;
+      const answerMass: number = this.answer.number;
+      const guessMass: number = guessElem.number;
 
       // Set Mass
       let massText = '';
@@ -73,17 +72,7 @@ export class HomeComponent implements OnInit {
       if (this.answer.category === guessElem.category) catText = 'Correct';
       else catText = 'Wrong';
 
-      // Set elem with closest mass
-      const massDiff = Math.abs(answerMass - guessMass);
-      if (massDiff > this.closestMassDiff) {
-        this.closestMassDiff = massDiff;
-        console.log(guessElem);
-        this.closestMassElem = guessElem;
-      }
-
-      //
-
-      this.result = `Mass is ${massText}, ${catText} Category`;
+      this.result = `Weight is ${massText}, ${catText} Category`;
     }
     this.inputFormControl.setValue('');
     this.focusInput();
@@ -98,12 +87,14 @@ export class HomeComponent implements OnInit {
         name: 'Start typing...',
         mass: -1,
         category: '',
+        number: -1,
       };
     else
       this.suggestedElem = {
         name: 'Not an element',
         mass: -1,
         category: '',
+        number: -1,
       };
   }
 
@@ -113,7 +104,7 @@ export class HomeComponent implements OnInit {
 
   getRandomElement(): Element {
     const index = Math.floor(Math.random() * (symbols.length - 1));
-    const symbol = symbols[index];
+    const symbol = Object.keys(elements)[index];
     const elem = elements[symbol];
     return { symbol, ...elem };
   }
@@ -142,27 +133,42 @@ export class HomeComponent implements OnInit {
       const elem = PeriodicTable[key];
       const colorkey = elem.category.replace(/\s/g, '');
       const color = this.colors[colorkey];
-      res[elem.symbol] = {
-        mass: Math.round(elem.atomic_mass * 100) / 100,
-        number: elem.number,
-        symbol: elem.symbol,
-        name: elem.name,
-        category: elem.category,
-        color,
-      };
+      if (!elem.category.includes('unknown'))
+        res[elem.symbol] = {
+          mass: Math.round(elem.atomic_mass * 100) / 100,
+          number: elem.number,
+          symbol: elem.symbol,
+          name: elem.name,
+          category: elem.category,
+          color,
+        };
     }
     console.log(res);*/
 
 /*
 
-colors: any = {
+
+  colors: any = {
     diatomicnonmetal: '#2196F3',
     noblegas: '#78909C',
-    alkalimetal: '#4CAF50',
+    alkalimetal: '#F44336',
     alkalineearthmetal: '#F44336',
     metalloid: '#FFC107',
     polyatomicnonmetal: '#009688',
-    posttransitionmetal: '#4CAF50',
+    post-transitionmetal: '#E91E63',
+    transitionmetal: '#673AB7',
+    lanthanide: '#8D6E63',
+    actinide: '#3F51B5',
+  };
+
+colors: any = {
+    diatomicnonmetal: '#2196F3',
+    noblegas: '#78909C',
+    alkalimetal: '#F44336',
+    alkalineearthmetal: '#F44336',
+    metalloid: '#FFC107',
+    polyatomicnonmetal: '#009688',
+    posttransitionmetal: '#E91E63',
     transitionmetal: '#673AB7',
     lanthanide: '#8D6E63',
     actinide: '#3F51B5',

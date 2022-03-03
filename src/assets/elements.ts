@@ -25,7 +25,7 @@ export const elements: {
     symbol: 'Li',
     name: 'Lithium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Be: {
     mass: 9.01,
@@ -89,7 +89,7 @@ export const elements: {
     symbol: 'Na',
     name: 'Sodium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Mg: {
     mass: 24.31,
@@ -105,6 +105,7 @@ export const elements: {
     symbol: 'Al',
     name: 'Aluminium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Si: {
     mass: 28.09,
@@ -152,7 +153,7 @@ export const elements: {
     symbol: 'K',
     name: 'Potassium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Ca: {
     mass: 40.08,
@@ -248,6 +249,7 @@ export const elements: {
     symbol: 'Ga',
     name: 'Gallium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Ge: {
     mass: 72.63,
@@ -295,7 +297,7 @@ export const elements: {
     symbol: 'Rb',
     name: 'Rubidium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Sr: {
     mass: 87.62,
@@ -391,6 +393,7 @@ export const elements: {
     symbol: 'In',
     name: 'Indium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Sn: {
     mass: 118.71,
@@ -398,6 +401,7 @@ export const elements: {
     symbol: 'Sn',
     name: 'Tin',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Sb: {
     mass: 121.76,
@@ -437,7 +441,7 @@ export const elements: {
     symbol: 'Cs',
     name: 'Cesium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Ba: {
     mass: 137.33,
@@ -645,6 +649,7 @@ export const elements: {
     symbol: 'Tl',
     name: 'Thallium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Pb: {
     mass: 207.21,
@@ -652,6 +657,7 @@ export const elements: {
     symbol: 'Pb',
     name: 'Lead',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Bi: {
     mass: 208.98,
@@ -659,6 +665,7 @@ export const elements: {
     symbol: 'Bi',
     name: 'Bismuth',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   Po: {
     mass: 209,
@@ -666,6 +673,7 @@ export const elements: {
     symbol: 'Po',
     name: 'Polonium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
   At: {
     mass: 210,
@@ -689,7 +697,7 @@ export const elements: {
     symbol: 'Fr',
     name: 'Francium',
     category: 'alkali metal',
-    color: '#4CAF50',
+    color: '#F44336',
   },
   Ra: {
     mass: 226,
@@ -859,27 +867,6 @@ export const elements: {
     category: 'transition metal',
     color: '#673AB7',
   },
-  /*Mt: {
-    mass: 278,
-    number: 109,
-    symbol: 'Mt',
-    name: 'Meitnerium',
-    category: 'unknown, probably transition metal',
-  },
-  Ds: {
-    mass: 281,
-    number: 110,
-    symbol: 'Ds',
-    name: 'Darmstadtium',
-    category: 'unknown, probably transition metal',
-  },
-  Rg: {
-    mass: 282,
-    number: 111,
-    symbol: 'Rg',
-    name: 'Roentgenium',
-    category: 'unknown, probably transition metal',
-  },*/
   Cn: {
     mass: 285,
     number: 112,
@@ -888,53 +875,12 @@ export const elements: {
     category: 'transition metal',
     color: '#673AB7',
   },
-  /*Nh: {
-    mass: 286,
-    number: 113,
-    symbol: 'Nh',
-    name: 'Nihonium',
-    category: 'unknown, probably transition metal',
-  },*/
   Fl: {
     mass: 289,
     number: 114,
     symbol: 'Fl',
     name: 'Flerovium',
     category: 'post-transition metal',
+    color: '#E91E63',
   },
-  /*Mc: {
-    mass: 289,
-    number: 115,
-    symbol: 'Mc',
-    name: 'Moscovium',
-    category: 'unknown, probably post-transition metal',
-  },
-  Lv: {
-    mass: 293,
-    number: 116,
-    symbol: 'Lv',
-    name: 'Livermorium',
-    category: 'unknown, probably post-transition metal',
-  },
-  Ts: {
-    mass: 294,
-    number: 117,
-    symbol: 'Ts',
-    name: 'Tennessine',
-    category: 'unknown, probably metalloid',
-  },
-  Og: {
-    mass: 294,
-    number: 118,
-    symbol: 'Og',
-    name: 'Oganesson',
-    category: 'unknown, predicted to be noble gas',
-  },
-  Uue: {
-    mass: 315,
-    number: 119,
-    symbol: 'Uue',
-    name: 'Ununennium',
-    category: 'unknown, but predicted to be an alkali metal',
-  },*/
 };

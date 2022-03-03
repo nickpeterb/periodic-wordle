@@ -11,33 +11,31 @@
   width: 100%;
   display: flex;
   gap: 0.5em;
-  margin-bottom: 0.5rem;
   justify-content: center;
 }
 
 .ansBox {
   height: 2em;
   width: 2em;
-  border: 1px solid lightgray;
+  border: 1px solid gray;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.guessesLeft {
-  margin-top: 15px;
+.green-text {
+  color: #4caf50;
 }
 
-.guessesLeft span {
-  background-color: black;
-  color: white;
-  padding: 1px 5px;
-  border-radius: 50%;
+.mass-hint {
+  width: 2em;
+  height: 3px;
+  margin: 2px auto;
 }
 
-.input-form {
-  --input-width: 324px; /* 2em at 140px */
+.result {
+  margin-bottom: 10px;
 }
 
 .suggested {
@@ -86,12 +84,13 @@ input {
   background-color: inherit;
   color: transparent;
   text-shadow: 0px 0px 0px white;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 input::placeholder {
   text-align: center;
   color: white;
+  opacity: 0.5;
 }
 
 input:placeholder-shown {
