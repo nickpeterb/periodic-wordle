@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
       if (this.answer.category === guessElem.category) catText = 'Correct';
       else catText = 'Wrong';
 
-      this.result = `Weight is ${massText}, ${catText} Category`;
+      this.result = `Number is ${massText}, ${catText} Category`;
     }
     this.inputFormControl.setValue('');
     this.focusInput();

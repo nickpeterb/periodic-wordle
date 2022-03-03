@@ -32,9 +32,6 @@
         <span class="cat">{{ suggestedElem.category }}</span>
         <div class="name-wrap">
           <span class="name">{{ suggestedElem.name }}</span>
-          <!--<span class="mass" *ngIf="suggestedElem.mass >= 0"
-            >{{ suggestedElem.mass }}u</span
-          >-->
         </div>
       </div>
       <div
@@ -51,14 +48,16 @@
     </div>
   </form>
 
-  <button
-    [disabled]="
-      inputFormControl.invalid || guessesLeft === 0 || suggestedElem === null
-    "
-    (click)="guess()"
-  >
-    Guess
-  </button>
+  <div style="display: flex">
+    <button
+      [disabled]="
+        inputFormControl.invalid || guessesLeft === 0 || suggestedElem === null
+      "
+      (click)="guess()"
+    >
+      Guess
+    </button>
 
-  <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
+    <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
+  </div>
 </div>
