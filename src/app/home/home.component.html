@@ -1,21 +1,54 @@
 <div class="home">
-  <div class="guessesLeft">
-    Guesses Remaining: <span>{{ guessesLeft }}</span>
+  <div class="answers">
+    <div
+      class="ansBox"
+      *ngFor="let _ of [].constructor(totalGuesses); let i = index"
+      [ngStyle]="{ 'background-color': guesses[i]?.color }"
+    >
+      {{ guesses[i]?.symbol }}
+    </div>
   </div>
-  <div *ngIf="guesses.length > 0">Guessed: {{ guesses.join(", ") }}</div>
-  <form class="input-form">
-    <div class="input">
-      <input [formControl]="inputFormControl" placeholder="Na" />
+
+  <div *ngIf="closestMassElem">
+    Closest Mass: {{ closestMassElem.name }} ({{ closestMassElem.mass }} u)
+  </div>
+
+  <form class="input-form" id="input-form" (keydown.enter)="guess($event)">
+    <div>
+      <div class="suggested" *ngIf="suggestedElem" (click)="focusInput()">
+        <span class="number" *ngIf="suggestedElem.number">{{
+          suggestedElem.number
+        }}</span>
+        <span class="cat">{{ suggestedElem.category }}</span>
+        <div class="name-wrap">
+          <span class="name">{{ suggestedElem.name }}</span>
+          <span class="mass" *ngIf="suggestedElem.mass >= 0"
+            >{{ suggestedElem.mass }}u</span
+          >
+        </div>
+      </div>
+      <div
+        class="input"
+        [ngStyle]="{ 'background-color': suggestedElem?.color }"
+      >
+        <input
+          id="elem-input"
+          [formControl]="inputFormControl"
+          (ngModelChange)="onChange($event)"
+          placeholder=""
+        />
+      </div>
     </div>
   </form>
 
   <button
-    [disabled]="inputFormControl.invalid || guessesLeft === 0"
+    [disabled]="
+      inputFormControl.invalid || guessesLeft === 0 || suggestedElem === null
+    "
     (click)="guess()"
   >
     Guess
   </button>
-  <br /><br />
 
   <div>{{ result }}</div>
   <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
