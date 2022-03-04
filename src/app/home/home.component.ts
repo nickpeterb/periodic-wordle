@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { elements } from 'src/assets/elements';
 //import { PeriodicTable } from 'src/assets/PeriodicTable';
-import { symbols } from 'src/assets/symbols';
 import { Element } from 'src/periodic-interfaces';
 
 @Component({
