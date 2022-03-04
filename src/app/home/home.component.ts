@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
       category: '',
       number: -1,
     };
+    document.getElementById('elem-input')?.click();
+    //prompt();
     this.focusInput();
   }
 
