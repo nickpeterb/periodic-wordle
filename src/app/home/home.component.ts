@@ -102,8 +102,9 @@ export class HomeComponent implements OnInit {
   }
 
   getRandomElement(): Element {
+    const symbols = Object.keys(elements);
     const index = Math.floor(Math.random() * (symbols.length - 1));
-    const symbol = Object.keys(elements)[index];
+    const symbol = symbols[index];
     const elem = elements[symbol];
     return { symbol, ...elem };
   }
