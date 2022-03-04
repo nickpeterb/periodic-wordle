@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   guessesLeft: number = this.totalGuesses;
   guesses: Element[] = [];
   suggestedElem: Element | null = null;
+  inputElemId = document.getElementById('elem-input');
 
   constructor() {
     this.answer = this.getRandomElement();
@@ -32,8 +33,16 @@ export class HomeComponent implements OnInit {
       number: -1,
     };
     //document.getElementById('elem-input')?.click();
-    prompt();
+    this.inputElemId?.addEventListener('click', () => {
+      this.inputElemId?.focus();
+    });
     this.focusInput();
+  }
+
+  ngOnDestroy() {
+    this.inputElemId?.removeEventListener('click', () => {
+      this.inputElemId?.focus();
+    });
   }
 
   guess(e?: Event) {
