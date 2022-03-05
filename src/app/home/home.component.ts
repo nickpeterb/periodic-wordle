@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   guessesLeft: number = this.totalGuesses;
   guesses: Element[] = [];
   suggestedElem: Element | null = null;
-  inputElemId = document.getElementById('elem-input');
+  //elemId = document.getElementById('suggested');
 
   constructor() {
     this.answer = this.getRandomElement();
@@ -27,26 +27,29 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.suggestedElem = {
+      name: 'Click here to start',
+      mass: -1,
+      category: '',
+      number: -1,
+    };
+  }
+
+  setTypingSuggestion() {
+    this.suggestedElem = {
       name: 'Start typing...',
       mass: -1,
       category: '',
       number: -1,
     };
-    //document.getElementById('elem-input')?.click();
-    this.inputElemId?.addEventListener('click', () => {
-      this.inputElemId?.focus();
-    });
   }
 
-  ngAfterViewInit() {
-    this.inputElemId?.click();
-    this.focusInput();
-  }
-
-  ngOnDestroy() {
-    this.inputElemId?.removeEventListener('click', () => {
-      this.inputElemId?.focus();
-    });
+  setStartSuggestion() {
+    this.suggestedElem = {
+      name: 'Click here to start typing',
+      mass: -1,
+      category: '',
+      number: -1,
+    };
   }
 
   guess(e?: Event) {

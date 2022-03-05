@@ -25,9 +25,20 @@
     {{ result }}
   </div>
 
-  <form class="input-form" id="input-form" (keydown.enter)="guess($event)">
+  <form
+    class="input-form"
+    id="input-form"
+    (keydown.enter)="guess($event)"
+    autocomplete="off"
+    (click)="setTypingSuggestion()"
+  >
     <div>
-      <div class="suggested" *ngIf="suggestedElem" (click)="focusInput()">
+      <div
+        class="suggested"
+        id="suggested"
+        *ngIf="suggestedElem"
+        (click)="focusInput()"
+      >
         <span class="number" *ngIf="suggestedElem.number >= 0">{{
           suggestedElem.number
         }}</span>
@@ -42,6 +53,7 @@
       >
         <input
           id="elem-input"
+          (focusout)="setStartSuggestion()"
           [formControl]="inputFormControl"
           (ngModelChange)="onChange($event)"
           placeholder="Na"
