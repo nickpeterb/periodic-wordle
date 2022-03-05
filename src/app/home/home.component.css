@@ -73,7 +73,6 @@
 }
 
 input {
-  text-decoration: none;
   padding: 0;
   border: none;
   border-bottom: 1px solid lightgray;
@@ -84,7 +83,8 @@ input {
   text-align: center;
   text-transform: capitalize;
   background-color: inherit;
-  color: white;
+  color: transparent;
+  text-shadow: 0px 0px 0px white;
   caret-color: transparent;
   opacity: 0.3;
 }

@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
       category: '',
       number: -1,
     };
+    this.onChange(this.inputFormControl.value);
   }
 
   setStartSuggestion() {
