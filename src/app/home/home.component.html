@@ -21,7 +21,9 @@
     </div>
   </div>
 
-  <div class="result">{{ result }}</div>
+  <div class="result" [ngStyle]="{ 'font-size': isDone ? '2em' : '' }">
+    {{ result }}
+  </div>
 
   <form class="input-form" id="input-form" (keydown.enter)="guess($event)">
     <div>
@@ -50,6 +52,7 @@
 
   <div style="display: flex">
     <button
+      *ngIf="!isDone"
       [disabled]="
         inputFormControl.invalid || guessesLeft === 0 || suggestedElem === null
       "

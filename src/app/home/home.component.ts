@@ -87,9 +87,10 @@ export class HomeComponent implements OnInit {
       else catText = 'Wrong';
 
       this.result = `Number is ${massText}, ${catText} Category`;
+
+      this.inputFormControl.setValue('');
+      this.focusInput();
     }
-    this.inputFormControl.setValue('');
-    this.focusInput();
     return null;
   }
 
