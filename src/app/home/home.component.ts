@@ -36,6 +36,10 @@ export class HomeComponent implements OnInit {
     this.inputElemId?.addEventListener('click', () => {
       this.inputElemId?.focus();
     });
+  }
+
+  ngAfterViewInit() {
+    this.inputElemId?.click();
     this.focusInput();
   }
 
