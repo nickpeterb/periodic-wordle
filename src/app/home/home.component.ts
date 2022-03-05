@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     this.guessesLeft -= 1;
 
     if (this.guessesLeft === 0) {
-      this.result = 'Sorry, you ran you of guesses!';
+      this.result = 'Sorry, you ran you of guesses';
       this.isDone = true;
       return null;
     }

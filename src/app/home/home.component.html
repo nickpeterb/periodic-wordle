@@ -21,7 +21,13 @@
     </div>
   </div>
 
-  <div class="result" [ngStyle]="{ 'font-size': isDone ? '2em' : '' }">
+  <div
+    class="result"
+    [ngStyle]="{
+      'font-size': isDone ? '2em' : '',
+      'margin-bottom': isDone ? '15px' : ''
+    }"
+  >
     {{ result }}
   </div>
 
