@@ -1,0 +1,12 @@
+<ol class="periodic-table" id="periodic-table">
+  <li
+    *ngFor="let elem of elements"
+    [id]="elem.name.toLowerCase()"
+    [ngStyle]="{ 'background-color': elem.color }"
+  >
+    <div class="num" *ngIf="elem.number > 0">{{ elem.number }}</div>
+    <div class="sym" [title]="elem.name">
+      {{ elem.symbol }}
+    </div>
+  </li>
+</ol>

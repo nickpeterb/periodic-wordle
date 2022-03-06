@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { elements } from 'src/assets/elements';
 //import { PeriodicTable } from 'src/assets/PeriodicTable';
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   guessesLeft: number = this.totalGuesses;
   guesses: Element[] = [];
   suggestedElem: Element | null = null;
-  //elemId = document.getElementById('suggested');
+  @Input() showPeriodicTable: boolean = false;
 
   constructor() {
     this.answer = this.getRandomElement();
@@ -69,7 +69,9 @@ export class HomeComponent implements OnInit {
     this.guessesLeft -= 1;
 
     if (this.guessesLeft === 0) {
-      this.result = 'Sorry, you ran you of guesses';
+      this.result = 'Sorry, the answer was';
+      this.suggestedElem = this.answer;
+      this.inputFormControl.setValue(this.answer.symbol);
       this.isDone = true;
       return null;
     }

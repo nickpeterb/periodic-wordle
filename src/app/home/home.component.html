@@ -17,68 +17,77 @@
         <div *ngIf="guesses[i].number > answer.number" class="mass-hint">
           High
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div
-    class="result"
-    [ngStyle]="{
-      'font-size': isDone ? '2em' : '',
-      'margin-bottom': isDone ? '15px' : ''
-    }"
-  >
-    {{ result }}
-  </div>
-
-  <form
-    class="input-form"
-    id="input-form"
-    (keydown.enter)="guess($event)"
-    autocomplete="off"
-    (click)="setTypingSuggestion()"
-  >
-    <div>
-      <div
-        class="suggested"
-        id="suggested"
-        *ngIf="suggestedElem"
-        (click)="focusInput()"
-      >
-        <span class="number" *ngIf="suggestedElem.number >= 0">{{
-          suggestedElem.number
-        }}</span>
-        <span class="cat">{{ suggestedElem.category }}</span>
-        <div class="name-wrap">
-          <span class="name">{{ suggestedElem.name }}</span>
+        <div *ngIf="guesses[i].number === answer.number" class="mass-hint">
+          Nice!
         </div>
       </div>
-      <div
-        class="input"
-        [ngStyle]="{ 'background-color': suggestedElem?.color }"
-      >
-        <input
-          id="elem-input"
-          (focusout)="setStartSuggestion()"
-          [formControl]="inputFormControl"
-          (ngModelChange)="onChange($event)"
-          placeholder="Na"
-        />
-      </div>
     </div>
-  </form>
-
-  <div style="display: flex">
-    <button
-      *ngIf="!isDone"
-      [disabled]="
-        inputFormControl.invalid || guessesLeft === 0 || suggestedElem === null
-      "
-      (click)="guess()"
-    >
-      Guess
-    </button>
-
-    <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
   </div>
+
+  <div *ngIf="!showPeriodicTable">
+    <div
+      class="result"
+      [ngStyle]="{
+        'font-size': isDone && '1.5em',
+        'margin-bottom': isDone && '15px'
+      }"
+    >
+      {{ result }}
+    </div>
+
+    <form
+      class="input-form"
+      id="input-form"
+      (keydown.enter)="guess($event)"
+      autocomplete="off"
+      (click)="setTypingSuggestion()"
+    >
+      <div>
+        <div
+          class="suggested"
+          id="suggested"
+          *ngIf="suggestedElem"
+          (click)="focusInput()"
+        >
+          <span class="number" *ngIf="suggestedElem.number >= 0">{{
+            suggestedElem.number
+          }}</span>
+          <span class="cat">{{ suggestedElem.category }}</span>
+          <div class="name-wrap">
+            <span class="name">{{ suggestedElem.name }}</span>
+          </div>
+        </div>
+        <div
+          class="input"
+          [ngStyle]="{ 'background-color': suggestedElem?.color }"
+        >
+          <input
+            id="elem-input"
+            (focusout)="setStartSuggestion()"
+            [formControl]="inputFormControl"
+            (ngModelChange)="onChange($event)"
+            placeholder="Na"
+          />
+        </div>
+      </div>
+    </form>
+
+    <div style="display: flex; justify-content: center">
+      <button
+        *ngIf="!isDone"
+        [disabled]="
+          inputFormControl.invalid ||
+          guessesLeft === 0 ||
+          suggestedElem === null
+        "
+        (click)="guess()"
+      >
+        Guess
+      </button>
+
+      <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
+    </div>
+  </div>
+
+  <app-periodic-table *ngIf="showPeriodicTable"></app-periodic-table>
 </div>

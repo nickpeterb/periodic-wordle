@@ -1,4 +1,13 @@
-<div class="nav">Elementle</div>
+<div class="nav">
+  <div>Elementle!</div>
+  <div class="spacer"></div>
+  <div class="show-table" (click)="showTable()" *ngIf="!showPeriodicTable">
+    Show Table
+  </div>
+  <div class="show-table" (click)="showTable()" *ngIf="showPeriodicTable">
+    Hide Table
+  </div>
+</div>
 <div class="app-body">
-  <router-outlet></router-outlet>
+  <app-home [showPeriodicTable]="showPeriodicTable"></app-home>
 </div>

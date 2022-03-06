@@ -3,10 +3,25 @@
   font-size: large;
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
+  align-items: center;
+  padding: 1rem;
   background-color: black;
 }
 
 .app-body {
   padding: 0 15px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.show-table {
+  font-size: 0.8em;
+  background-color: grey;
+  padding: 0.2rem 0.5rem;
+}
+
+.show-table:hover {
+  cursor: pointer;
 }

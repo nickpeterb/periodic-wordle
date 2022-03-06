@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'periodic-wordle';
+  showPeriodicTable: boolean = false;
 
   ngOnInit() {}
+
+  showTable() {
+    this.showPeriodicTable = !this.showPeriodicTable;
+  }
 }
