@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { orderedElems } from 'src/assets/orderedElems';
+import { Element } from 'src/periodic-interfaces';
 
 @Component({
   selector: 'app-periodic-table',
@@ -9,9 +10,24 @@ import { orderedElems } from 'src/assets/orderedElems';
 export class PeriodicTableComponent implements OnInit {
   elements = orderedElems;
 
+  @Input() badCategories: string[] = [];
+  @Input() answer!: Element;
+  @Input() hasCorrCat: boolean = false;
+  @Input() tooLowHigh: number[] = [0, 200];
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  isBad(elem: Element) {
+    if (elem.category === this.answer.category) {
+      const [low, high] = this.tooLowHigh;
+      return elem.number <= low || elem.number >= high;
+    }
+    if (this.hasCorrCat) return elem.category !== this.answer.category;
+    if (this.badCategories.includes(elem.category)) return true;
+    return false;
+  }
 
   /*
   ngOnInit(): void {

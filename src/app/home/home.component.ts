@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { elements } from 'src/assets/elements';
+import { environment } from 'src/environments/environment';
 //import { PeriodicTable } from 'src/assets/PeriodicTable';
 import { Element } from 'src/periodic-interfaces';
 
@@ -20,9 +21,12 @@ export class HomeComponent implements OnInit {
   suggestedElem: Element | null = null;
   @Input() showPeriodicTable: boolean = false;
 
+  badCategories: string[] = [];
+  hasCorrCat: boolean = false;
+  tooLowHigh: number[] = [0, 200];
+
   constructor() {
     this.answer = this.getRandomElement();
-    console.log('answer', this.answer.symbol);
   }
 
   ngOnInit(): void {
@@ -32,25 +36,8 @@ export class HomeComponent implements OnInit {
       category: '',
       number: -1,
     };
-  }
 
-  setTypingSuggestion() {
-    this.suggestedElem = {
-      name: 'Start typing...',
-      mass: -1,
-      category: '',
-      number: -1,
-    };
-    this.onChange(this.inputFormControl.value);
-  }
-
-  setStartSuggestion() {
-    this.suggestedElem = {
-      name: 'Click here to start typing',
-      mass: -1,
-      category: '',
-      number: -1,
-    };
+    if (!environment.production) console.log('answer', this.answer.symbol);
   }
 
   guess(e?: Event) {
@@ -83,14 +70,20 @@ export class HomeComponent implements OnInit {
       const guessMass: number = guessElem.number;
 
       // Set Mass
-      let massText = '';
-      if (answerMass === guessMass) massText = 'Correct';
-      massText = answerMass > guessMass ? 'Too Low' : 'Too High';
+      let massText = answerMass > guessMass ? 'Too Low' : 'Too High';
 
       // Set Category
       let catText = '';
-      if (this.answer.category === guessElem.category) catText = 'Correct';
-      else catText = 'Wrong';
+      if (this.answer.category === guessElem.category) {
+        catText = 'Correct';
+        this.hasCorrCat = true;
+        answerMass > guessMass
+          ? (this.tooLowHigh[0] = guessMass)
+          : (this.tooLowHigh[1] = guessMass);
+      } else {
+        catText = 'Wrong';
+        this.badCategories.push(guessElem.category);
+      }
 
       this.result = `Number is ${massText}, ${catText} Category`;
 
@@ -117,6 +110,25 @@ export class HomeComponent implements OnInit {
         category: '',
         number: -1,
       };
+  }
+
+  setTypingSuggestion() {
+    this.suggestedElem = {
+      name: 'Start typing...',
+      mass: -1,
+      category: '',
+      number: -1,
+    };
+    this.onChange(this.inputFormControl.value);
+  }
+
+  setStartSuggestion() {
+    this.suggestedElem = {
+      name: 'Click here to start typing',
+      mass: -1,
+      category: '',
+      number: -1,
+    };
   }
 
   tryAgain() {

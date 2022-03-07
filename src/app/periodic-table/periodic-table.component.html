@@ -3,6 +3,7 @@
     *ngFor="let elem of elements"
     [id]="elem.name.toLowerCase()"
     [ngStyle]="{ 'background-color': elem.color }"
+    [ngClass]="{ bad: isBad(elem) }"
   >
     <div class="num" *ngIf="elem.number > 0">{{ elem.number }}</div>
     <div class="sym" [title]="elem.name">
@@ -10,3 +11,6 @@
     </div>
   </li>
 </ol>
+
+<div class="txt">This table will update as you make guesses</div>
+<div class="zoom">Zoom for a closer view</div>

@@ -89,5 +89,11 @@
     </div>
   </div>
 
-  <app-periodic-table *ngIf="showPeriodicTable"></app-periodic-table>
+  <app-periodic-table
+    *ngIf="showPeriodicTable"
+    [badCategories]="badCategories"
+    [answer]="answer"
+    [hasCorrCat]="hasCorrCat"
+    [tooLowHigh]="tooLowHigh"
+  ></app-periodic-table>
 </div>
