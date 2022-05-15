@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { elements } from 'src/assets/elements';
 import { environment } from 'src/environments/environment';
-//import { PeriodicTable } from 'src/assets/PeriodicTable';
 import { Element } from 'src/periodic-interfaces';
 
 @Component({
@@ -25,18 +24,27 @@ export class HomeComponent implements OnInit {
   hasCorrCat: boolean = false;
   tooLowHigh: number[] = [0, 200];
 
+  invalidElem = {
+    mass: -1,
+    category: '',
+    number: -1,
+  };
+
+  /* colors: any = {
+    nonmetal: '#2196F3',
+    noblegas: '#009688',
+    alkalimetal: '#F44336',
+    metalloid: '#78909C',
+    transitionmetal: '#673AB7',
+    lanthanide_actinide: '#8D6E63',
+  }; */
+
   constructor() {
     this.answer = this.getRandomElement();
   }
 
   ngOnInit(): void {
-    this.suggestedElem = {
-      name: 'Click here to start',
-      mass: -1,
-      category: '',
-      number: -1,
-    };
-
+    this.setStartSuggestion();
     if (!environment.production) console.log('answer', this.answer.symbol);
   }
 
@@ -46,7 +54,7 @@ export class HomeComponent implements OnInit {
     const guessSym =
       input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     const guessElem = elements[guessSym];
-
+    console.log(guessElem.name, guessElem.category);
     if (!(guessSym in elements)) {
       this.result = 'Invalid input';
       return null;
@@ -99,35 +107,27 @@ export class HomeComponent implements OnInit {
     else if (input === '')
       this.suggestedElem = {
         name: 'Start typing...',
-        mass: -1,
-        category: '',
-        number: -1,
+        ...this.invalidElem,
       };
     else
       this.suggestedElem = {
         name: 'Not an element',
-        mass: -1,
-        category: '',
-        number: -1,
+        ...this.invalidElem,
       };
   }
 
   setTypingSuggestion() {
     this.suggestedElem = {
       name: 'Start typing...',
-      mass: -1,
-      category: '',
-      number: -1,
+      ...this.invalidElem,
     };
     this.onChange(this.inputFormControl.value);
   }
 
   setStartSuggestion() {
     this.suggestedElem = {
-      name: 'Click here to start typing',
-      mass: -1,
-      category: '',
-      number: -1,
+      name: 'Click here to enter element',
+      ...this.invalidElem,
     };
   }
 
@@ -162,7 +162,32 @@ export class HomeComponent implements OnInit {
     return `${sym}: Mass (${elem.mass}) Is Too ${lowHigh}; Category (${elem.category}) is ${category}`;
   }*/
 }
-/*let res: { [key: string]: Element } = {};
+
+/* let res: { [key: string]: Element } = {};
+    for (const key in elements) {
+      const elem = elements[key];
+      const colorkey = elem.category.replace(/\s/g, '');
+      const color = this.colors[colorkey];
+      res[key] = { ...elem, color };
+    }
+    console.log(res); */
+
+/*
+
+colors: any = {
+    diatomicnonmetal: '#2196F3',
+    noblegas: '#78909C',
+    alkalimetal: '#F44336',
+    alkalineearthmetal: '#F44336',
+    metalloid: '#FFC107',
+    polyatomicnonmetal: '#009688',
+    posttransitionmetal: '#E91E63',
+    transitionmetal: '#673AB7',
+    lanthanide: '#8D6E63',
+    actinide: '#3F51B5',
+  };
+
+  let res: { [key: string]: Element } = {};
     for (const key in PeriodicTable) {
       const elem = PeriodicTable[key];
       const colorkey = elem.category.replace(/\s/g, '');
@@ -177,35 +202,6 @@ export class HomeComponent implements OnInit {
           color,
         };
     }
-    console.log(res);*/
-
-/*
-
-
-  colors: any = {
-    diatomicnonmetal: '#2196F3',
-    noblegas: '#78909C',
-    alkalimetal: '#F44336',
-    alkalineearthmetal: '#F44336',
-    metalloid: '#FFC107',
-    polyatomicnonmetal: '#009688',
-    post-transitionmetal: '#E91E63',
-    transitionmetal: '#673AB7',
-    lanthanide: '#8D6E63',
-    actinide: '#3F51B5',
-  };
-
-colors: any = {
-    diatomicnonmetal: '#2196F3',
-    noblegas: '#78909C',
-    alkalimetal: '#F44336',
-    alkalineearthmetal: '#F44336',
-    metalloid: '#FFC107',
-    polyatomicnonmetal: '#009688',
-    posttransitionmetal: '#E91E63',
-    transitionmetal: '#673AB7',
-    lanthanide: '#8D6E63',
-    actinide: '#3F51B5',
-  };
+    console.log(res);
 
   */
