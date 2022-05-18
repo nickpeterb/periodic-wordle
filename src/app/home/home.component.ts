@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   answer: PeriodicElement;
   result: string = '';
   isDone: boolean = false;
-  totalGuesses: number = 10;
+  totalGuesses: number = 5;
   guessesLeft: number = this.totalGuesses;
   guesses: PeriodicElement[] = [];
   suggestedElem: PeriodicElement | null = null;

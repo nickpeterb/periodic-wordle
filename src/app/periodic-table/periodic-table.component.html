@@ -4,7 +4,7 @@
     [id]="elem.name.toLowerCase()"
     [ngStyle]="{ 'background-color': color(elem.category) }"
     [ngClass]="{ bad: isBad(elem) }"
-    [title]="elem.category + ' - ' + elem.name"
+    [title]="elem.display_cat + ' - ' + elem.name"
   >
     <div class="num" *ngIf="elem.number > 0">{{ elem.number }}</div>
     <div class="sym">
