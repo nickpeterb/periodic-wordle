@@ -1,8 +1,8 @@
-export interface Element {
+export interface PeriodicElement {
   mass?: number;
   category: string;
   name: string;
   number: number;
   symbol?: string;
-  color?: string;
+  display_cat: string;
 }

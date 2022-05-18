@@ -2,7 +2,7 @@
   <li
     *ngFor="let elem of elements"
     [id]="elem.name.toLowerCase()"
-    [ngStyle]="{ 'background-color': elem.color }"
+    [ngStyle]="{ 'background-color': color(elem.category) }"
     [ngClass]="{ bad: isBad(elem) }"
     [title]="elem.category + ' - ' + elem.name"
   >

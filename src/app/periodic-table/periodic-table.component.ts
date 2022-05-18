@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { colors } from 'src/assets/elements';
 import { orderedElems } from 'src/assets/orderedElems';
-import { Element } from 'src/periodic-interfaces';
+import { PeriodicElement } from 'src/periodic-interfaces';
 
 @Component({
   selector: 'app-periodic-table',
@@ -11,7 +12,7 @@ export class PeriodicTableComponent implements OnInit {
   elements = orderedElems;
 
   @Input() badCategories: string[] = [];
-  @Input() answer!: Element;
+  @Input() answer!: PeriodicElement;
   @Input() hasCorrCat: boolean = false;
   @Input() tooLowHigh: number[] = [0, 200];
 
@@ -19,7 +20,11 @@ export class PeriodicTableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isBad(elem: Element) {
+  color(category: string): string {
+    return colors[category];
+  }
+
+  isBad(elem: PeriodicElement) {
     if (elem.category === this.answer.category) {
       const [low, high] = this.tooLowHigh;
       return elem.number <= low || elem.number >= high;
@@ -30,6 +35,22 @@ export class PeriodicTableComponent implements OnInit {
   }
 
   /*
+
+   /*  let res = [];
+    for (const key in elementsObj) {
+      res.push(elementsObj[key]);
+    }
+    for (let i = 0; i < 10; i++) {
+      res.push({
+        mass: -1,
+        category: '',
+        name: '_',
+        number: -1,
+        color: '#242424',
+      });
+    }
+    console.log(res);
+
   ngOnInit(): void {
     let res = [];
     for (const sym of symbols) {

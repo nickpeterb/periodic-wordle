@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { elements } from 'src/assets/elements';
+import { colors, elements } from 'src/assets/elements';
 import { environment } from 'src/environments/environment';
-import { Element } from 'src/periodic-interfaces';
+import { PeriodicElement } from 'src/periodic-interfaces';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +11,13 @@ import { Element } from 'src/periodic-interfaces';
 })
 export class HomeComponent implements OnInit {
   inputFormControl = new FormControl('', [Validators.required]);
-  answer: Element;
+  answer: PeriodicElement;
   result: string = '';
   isDone: boolean = false;
   totalGuesses: number = 10;
   guessesLeft: number = this.totalGuesses;
-  guesses: Element[] = [];
-  suggestedElem: Element | null = null;
+  guesses: PeriodicElement[] = [];
+  suggestedElem: PeriodicElement | null = null;
   @Input() showPeriodicTable: boolean = false;
 
   badCategories: string[] = [];
@@ -28,16 +28,8 @@ export class HomeComponent implements OnInit {
     mass: -1,
     category: '',
     number: -1,
+    display_cat: '',
   };
-
-  /* colors: any = {
-    nonmetal: '#2196F3',
-    noblegas: '#009688',
-    alkalimetal: '#F44336',
-    metalloid: '#78909C',
-    transitionmetal: '#673AB7',
-    lanthanide_actinide: '#8D6E63',
-  }; */
 
   constructor() {
     this.answer = this.getRandomElement();
@@ -48,13 +40,16 @@ export class HomeComponent implements OnInit {
     if (!environment.production) console.log('answer', this.answer.symbol);
   }
 
+  color(category: string): string {
+    return colors[category];
+  }
+
   guess(e?: Event) {
     if (e) e.preventDefault();
     const input: string = this.inputFormControl.value;
     const guessSym =
       input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     const guessElem = elements[guessSym];
-    console.log(guessElem.name, guessElem.category);
     if (!(guessSym in elements)) {
       this.result = 'Invalid input';
       return null;
@@ -135,7 +130,7 @@ export class HomeComponent implements OnInit {
     window.location.href = '/';
   }
 
-  getRandomElement(): Element {
+  getRandomElement(): PeriodicElement {
     const symbols = Object.keys(elements);
     const index = Math.floor(Math.random() * (symbols.length - 1));
     const symbol = symbols[index];
@@ -203,5 +198,35 @@ colors: any = {
         };
     }
     console.log(res);
+
+    Most recent::
+     let res: { [key: string]: PeriodicElement } = {};
+    for (const key in PeriodicTable) {
+      const elem = PeriodicTable[key];
+      const catkey = elem.category.replace(/\s/g, '').replace('-', '');
+      if (!elem.category.includes('unknown'))
+        res[elem.symbol] = {
+          mass: Math.round(elem.atomic_mass * 100) / 100,
+          number: elem.number,
+          symbol: elem.symbol,
+          name: elem.name,
+          category: this.cats[catkey],
+          display_cat: elem.category,
+        };
+    }
+    console.log(res); 
+
+    cats: any = {
+    diatomicnonmetal: 'nonmetal',
+    noblegas: 'polyatomicnonmetal',
+    alkalimetal: 'alkalai',
+    alkalineearthmetal: 'alkalai',
+    metalloid: 'metal',
+    polyatomicnonmetal: 'nonmetal',
+    posttransitionmetal: 'metal',
+    transitionmetal: 'transitionmetal',
+    lanthanide: 'nide',
+    actinide: 'nide',
+  };
 
   */

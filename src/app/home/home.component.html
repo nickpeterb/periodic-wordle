@@ -1,7 +1,10 @@
 <div class="home">
   <div class="answers">
     <div *ngFor="let _ of [].constructor(totalGuesses); let i = index">
-      <div class="ansBox" [ngStyle]="{ 'background-color': guesses[i]?.color }">
+      <div
+        class="ansBox"
+        [ngStyle]="{ 'background-color': color(guesses[i]?.category ?? '') }"
+      >
         {{ guesses[i]?.symbol }}
       </div>
       <div
@@ -59,7 +62,9 @@
         </div>
         <div
           class="input"
-          [ngStyle]="{ 'background-color': suggestedElem?.color }"
+          [ngStyle]="{
+            'background-color': color(suggestedElem?.category ?? '')
+          }"
         >
           <input
             id="elem-input"

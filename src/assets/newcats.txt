@@ -1,0 +1,16 @@
+alkalai: 'alkalimetal alkalineearthmetal',
+transitionmetal: 'transitionmetal',
+metal: 'metalloid posttransitionmetal',
+nonmetal: 'diatomicnonmetal polyatomicnonmetal noblegas',
+nide: 'lanthanide actinide'
+
+diatomicnonmetal: 'nonmetal',
+noblegas: 'polyatomicnonmetal',
+alkalimetal: 'alkalai',
+alkalineearthmetal: 'alkalai',
+metalloid: 'metal',
+polyatomicnonmetal: 'nonmetal',
+posttransitionmetal: 'metal',
+transitionmetal: 'transitionmetal',
+lanthanide: 'nide',
+actinide: 'nide',
