@@ -12,7 +12,7 @@ import { PeriodicElement } from 'src/periodic-interfaces';
 export class HomeComponent implements OnInit {
   inputFormControl = new FormControl('', [Validators.required]);
   answer: PeriodicElement;
-  result: string = '';
+  msg: string = '';
   isDone: boolean = false;
   totalGuesses: number = 5;
   guessesLeft: number = this.totalGuesses;
@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit {
 
   badCategories: string[] = [];
   hasCorrCat: boolean = false;
-  tooLowHigh: number[] = [0, 200];
+  tooLowHigh: number[] = [0, 200]; // 200 is an arbitrary high number
 
-  invalidElem = {
+  emptyElem = {
     mass: -1,
     category: '',
     number: -1,
@@ -32,11 +32,26 @@ export class HomeComponent implements OnInit {
   };
 
   constructor() {
-    this.answer = this.getRandomElement();
+    this.answer = this.getTodaysElement();
   }
 
   ngOnInit(): void {
     this.setStartSuggestion();
+    const hasPlayed = localStorage.getItem('played');
+    const hasState = localStorage.getItem('state');
+    if (hasState !== null) this.restoreState();
+    if (hasPlayed !== null) {
+      const lastPlayed = parseInt(hasPlayed);
+      const datePlayed = new Date(lastPlayed).toLocaleDateString('en-GB');
+      const today = new Date().toLocaleDateString('en-GB');
+      if (datePlayed === today) {
+        this.suggestedElem = this.answer;
+        this.inputFormControl.setValue(this.answer.symbol);
+      } else {
+        localStorage.removeItem('played');
+        this.clearState();
+      }
+    }
     if (!environment.production) console.log('answer', this.answer.symbol);
   }
 
@@ -44,30 +59,62 @@ export class HomeComponent implements OnInit {
     return colors[category];
   }
 
+  updateState(): void {
+    const state = {
+      guesses: this.guesses,
+      badCategories: this.badCategories,
+      hasCorrCat: this.hasCorrCat,
+      tooLowHigh: this.tooLowHigh,
+      guessesLeft: this.guessesLeft,
+      isDone: this.isDone,
+      msg: this.msg,
+    };
+    localStorage.setItem('state', JSON.stringify(state));
+  }
+
+  clearState(): void {
+    localStorage.removeItem('state');
+  }
+
+  restoreState(): void {
+    const local = localStorage.getItem('state');
+    if (local !== null) {
+      const state = JSON.parse(local);
+      this.guesses = state.guesses;
+      this.badCategories = state.badCategories;
+      this.hasCorrCat = state.hasCorrCat;
+      this.tooLowHigh = state.tooLowHigh;
+      this.guessesLeft = state.guessesLeft;
+      this.isDone = state.isDone;
+      this.msg = state.msg;
+    }
+  }
+
   guess(e?: Event) {
     if (e) e.preventDefault();
     const input: string = this.inputFormControl.value;
+    console.log(input);
     const guessSym =
       input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     const guessElem = elements[guessSym];
     if (!(guessSym in elements)) {
-      this.result = 'Invalid input';
+      this.msg = 'Invalid input';
       return null;
     }
 
     this.guesses.push(guessElem);
     this.guessesLeft -= 1;
 
-    if (this.guessesLeft === 0) {
-      this.result = 'Sorry, the answer was';
+    if (this.guessesLeft === 0 && guessSym !== this.answer.symbol) {
+      this.msg = 'Sorry, the answer was';
       this.suggestedElem = this.answer;
       this.inputFormControl.setValue(this.answer.symbol);
-      this.isDone = true;
+      this.endGame();
       return null;
     }
     if (guessSym === this.answer.symbol) {
-      this.result = 'You got it!';
-      this.isDone = true;
+      this.msg = 'You got it!';
+      this.endGame();
     } else {
       const answerMass: number = this.answer.number;
       const guessMass: number = guessElem.number;
@@ -88,12 +135,20 @@ export class HomeComponent implements OnInit {
         this.badCategories.push(guessElem.category);
       }
 
-      this.result = `Number is ${massText}, ${catText} Category`;
+      this.msg = `Number is ${massText}, ${catText} Category`;
 
+      this.updateState();
       this.inputFormControl.setValue('');
       this.focusInput();
     }
     return null;
+  }
+
+  endGame() {
+    this.isDone = true;
+    const now = new Date().getTime().toString();
+    localStorage.setItem('played', now);
+    this.updateState();
   }
 
   onChange(input: string) {
@@ -102,19 +157,19 @@ export class HomeComponent implements OnInit {
     else if (input === '')
       this.suggestedElem = {
         name: 'Start typing...',
-        ...this.invalidElem,
+        ...this.emptyElem,
       };
     else
       this.suggestedElem = {
         name: 'Not an element',
-        ...this.invalidElem,
+        ...this.emptyElem,
       };
   }
 
   setTypingSuggestion() {
     this.suggestedElem = {
       name: 'Start typing...',
-      ...this.invalidElem,
+      ...this.emptyElem,
     };
     this.onChange(this.inputFormControl.value);
   }
@@ -122,20 +177,25 @@ export class HomeComponent implements OnInit {
   setStartSuggestion() {
     this.suggestedElem = {
       name: 'Click here to enter element',
-      ...this.invalidElem,
+      ...this.emptyElem,
     };
   }
 
-  tryAgain() {
-    window.location.href = '/';
-  }
+  getTodaysElement(): PeriodicElement {
+    const epoch = new Date(2022, 0);
+    const start = new Date(epoch);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let index = 0;
+    while (start < today) {
+      index++;
+      start.setDate(start.getDate() + 1);
+    }
 
-  getRandomElement(): PeriodicElement {
     const symbols = Object.keys(elements);
-    const index = Math.floor(Math.random() * (symbols.length - 1));
-    const symbol = symbols[index];
+    const symbol = symbols[index % symbols.length];
     const elem = elements[symbol];
-    return { symbol, ...elem };
+    return elem;
   }
 
   inputClass(num: number) {

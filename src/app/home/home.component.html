@@ -1,8 +1,10 @@
 <div class="home">
+  <!-- <dialog [open]="isDone"></dialog> -->
   <div class="answers">
     <div *ngFor="let _ of [].constructor(totalGuesses); let i = index">
       <div
         class="ansBox"
+        [ngClass]="{ outline: !guesses[i] }"
         [ngStyle]="{ 'background-color': color(guesses[i]?.category ?? '') }"
       >
         {{ guesses[i]?.symbol }}
@@ -29,13 +31,13 @@
 
   <div *ngIf="!showPeriodicTable">
     <div
-      class="result"
+      class="msg"
       [ngStyle]="{
         'font-size': isDone && '1.5em',
         'margin-bottom': isDone && '15px'
       }"
     >
-      {{ result }}
+      {{ msg }}
     </div>
 
     <form
@@ -62,6 +64,7 @@
         </div>
         <div
           class="input"
+          id="input-wrap"
           [ngStyle]="{
             'background-color': color(suggestedElem?.category ?? '')
           }"
@@ -72,6 +75,7 @@
             [formControl]="inputFormControl"
             (ngModelChange)="onChange($event)"
             placeholder="Na"
+            [readonly]="isDone"
           />
         </div>
       </div>
@@ -89,8 +93,6 @@
       >
         Guess
       </button>
-
-      <button *ngIf="isDone" (click)="tryAgain()">Try Again</button>
     </div>
   </div>
 

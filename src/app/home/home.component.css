@@ -17,11 +17,14 @@
 .ansBox {
   height: 2em;
   width: 2em;
-  border: 1px solid gray;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.ansBox.outline {
+  border: 1px solid gray;
 }
 
 .green-text {
@@ -34,7 +37,7 @@
   margin: 2px auto;
 }
 
-.result {
+.msg {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
