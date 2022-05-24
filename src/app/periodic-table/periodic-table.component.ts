@@ -13,7 +13,6 @@ export class PeriodicTableComponent implements OnInit {
 
   @Input() badCategories: string[] = [];
   @Input() answer!: PeriodicElement;
-  @Input() hasCorrCat: boolean = false;
   @Input() tooLowHigh: number[] = [0, 200];
 
   constructor() {}
@@ -25,13 +24,9 @@ export class PeriodicTableComponent implements OnInit {
   }
 
   isBad(elem: PeriodicElement) {
-    if (elem.category === this.answer.category) {
-      const [low, high] = this.tooLowHigh;
-      return elem.number <= low || elem.number >= high;
-    }
-    if (this.hasCorrCat) return elem.category !== this.answer.category;
     if (this.badCategories.includes(elem.category)) return true;
-    return false;
+    const [low, high] = this.tooLowHigh;
+    return elem.number <= low || elem.number >= high;
   }
 
   /*

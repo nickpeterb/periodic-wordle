@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit {
   @Input() showPeriodicTable: boolean = false;
 
   badCategories: string[] = [];
-  hasCorrCat: boolean = false;
   tooLowHigh: number[] = [0, 200]; // 200 is an arbitrary high number
 
   emptyElem = {
@@ -31,6 +30,7 @@ export class HomeComponent implements OnInit {
     number: -1,
     display_cat: '',
   };
+  categories: string[] = Object.keys(colors);
 
   constructor() {
     this.answer = this.getTodaysElement();
@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
     const state = {
       guesses: this.guesses,
       badCategories: this.badCategories,
-      hasCorrCat: this.hasCorrCat,
       tooLowHigh: this.tooLowHigh,
       guessesLeft: this.guessesLeft,
       isDone: this.isDone,
@@ -84,7 +83,6 @@ export class HomeComponent implements OnInit {
       const state = JSON.parse(local);
       this.guesses = state.guesses;
       this.badCategories = state.badCategories;
-      this.hasCorrCat = state.hasCorrCat;
       this.tooLowHigh = state.tooLowHigh;
       this.guessesLeft = state.guessesLeft;
       this.isDone = state.isDone;
@@ -122,16 +120,18 @@ export class HomeComponent implements OnInit {
 
       // Set Mass
       let massText = answerMass > guessMass ? 'Too Low' : 'Too High';
+      if (answerMass > guessMass && guessMass > this.tooLowHigh[0])
+        this.tooLowHigh[0] = guessMass;
+      if (answerMass < guessMass && guessMass < this.tooLowHigh[1])
+        this.tooLowHigh[1] = guessMass;
 
       // Set Category
       let catText = '';
       if (this.answer.category === guessElem.category) {
         catText = 'Correct';
-        this.hasCorrCat = true;
-        if (answerMass > guessMass && guessMass > this.tooLowHigh[0])
-          this.tooLowHigh[0] = guessMass;
-        if (answerMass < guessMass && guessMass < this.tooLowHigh[1])
-          this.tooLowHigh[1] = guessMass;
+        this.badCategories = this.categories.filter(
+          (cat) => cat !== guessElem.category
+        );
       } else {
         catText = 'Wrong';
         this.badCategories.push(guessElem.category);
@@ -150,9 +150,7 @@ export class HomeComponent implements OnInit {
     this.isDone = true;
     const now = new Date().getTime().toString();
     localStorage.setItem('played', now);
-    // Only highlight correct elem
-    this.tooLowHigh = [this.answer.number - 1, this.answer.number + 1];
-    this.hasCorrCat = true;
+    this.tooLowHigh = [this.answer.number - 1, this.answer.number + 1]; // Only highlight correct elem
     this.updateState();
   }
 
