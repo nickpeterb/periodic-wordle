@@ -18,7 +18,7 @@
 
 .show-table {
   font-size: 0.8em;
-  background-color: grey;
+  background-color: #505050;
   padding: 0.2rem 0.5rem;
 }
 
@@ -32,11 +32,69 @@
   width: 100vw;
   height: 30px;
   padding: 5px 15px;
-  background-color: grey;
-  color: black;
+  background-color: #505050;
+  color: white;
   text-align: center;
 }
 
 .footer a {
-  color: black;
+  color: white;
+}
+
+#whats-new-dialog {
+  color: white;
+  border: 2px solid grey;
+  background-color: #505050;
+  z-index: 999;
+  width: 30rem;
+  max-width: 90vw;
+  margin-top: 10px;
+}
+
+#whats-new-dialog #close {
+  position: absolute;
+  font-size: 18px;
+  right: 20px;
+  top: 18px;
+  padding: 2px 5px;
+  background-color: #303030;
+}
+
+#whats-new-dialog #close:hover {
+  cursor: pointer;
+  color: lightcoral;
+}
+
+#whats-new-dialog #close:active {
+  color: lightcoral;
+}
+
+#whats-new-dialog h1 {
+  margin-bottom: 15px !important;
+}
+
+#whats-new-dialog h3 {
+  font-size: 20px;
+  margin-bottom: 10px !important;
+}
+
+@media (max-width: 400px) {
+  #whats-new-dialog h1 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 361px) {
+  #whats-new-dialog h1 {
+    font-size: 20px;
+  }
+}
+
+#whats-new-dialog ul {
+  margin-top: 0px;
+  padding-inline-start: 20px !important;
+}
+
+#whats-new-dialog li {
+  margin-bottom: 5px;
 }

@@ -8,10 +8,24 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'periodic-wordle';
   showPeriodicTable: boolean = false;
+  showWhatsNew: boolean;
+
+  constructor() {
+    this.showWhatsNew = this.showWhatsNewDialog();
+  }
 
   ngOnInit() {}
 
-  showTable() {
+  toggleTable(): void {
     this.showPeriodicTable = !this.showPeriodicTable;
+  }
+
+  hideWhatsNew(): void {
+    this.showWhatsNew = false;
+    localStorage.setItem('whatsnew', '');
+  }
+
+  showWhatsNewDialog(): boolean {
+    return localStorage.getItem('whatsnew') === null;
   }
 }

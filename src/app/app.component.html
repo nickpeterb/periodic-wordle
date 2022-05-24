@@ -1,13 +1,36 @@
 <div class="nav">
   <div>Elementle!</div>
   <div class="spacer"></div>
-  <div class="show-table" (click)="showTable()" *ngIf="!showPeriodicTable">
+  <div class="show-table" (click)="toggleTable()" *ngIf="!showPeriodicTable">
     Show Table
   </div>
-  <div class="show-table" (click)="showTable()" *ngIf="showPeriodicTable">
+  <div class="show-table" (click)="toggleTable()" *ngIf="showPeriodicTable">
     Hide Table
   </div>
 </div>
+
+<dialog id="whats-new-dialog" [open]="showWhatsNew">
+  <div (click)="hideWhatsNew()" id="close">✕</div>
+  <h1>Welcome to Elementle 2.0!</h1>
+  <h3>What's new?</h3>
+  <ul>
+    <li>One element per day</li>
+    <li>Fewer guesses</li>
+    <li>
+      Fewer categories
+      <ul>
+        <li>Alkali metals & Alkaline earth metals</li>
+        <li>Transition metals</li>
+        <li>Metalloids & Post-transition metals</li>
+        <li>Diatomic nonmetals, Polyatomic nonmetals, & Noble gases</li>
+        <li>Lanthanides & Actinides</li>
+      </ul>
+    </li>
+    <li>Improved periodic table (greying out impossible elements)</li>
+    <li>Progress saves as you play, even on refresh</li>
+  </ul>
+</dialog>
+
 <div class="app-body">
   <app-home [showPeriodicTable]="showPeriodicTable"></app-home>
 </div>
