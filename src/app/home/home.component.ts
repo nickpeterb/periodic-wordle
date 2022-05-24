@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { colors, elements } from 'src/assets/elements';
 import { environment } from 'src/environments/environment';
 import { PeriodicElement } from 'src/periodic-interfaces';
+import * as seedrandom from 'seedrandom';
 
 @Component({
   selector: 'app-home',
@@ -187,18 +188,12 @@ export class HomeComponent implements OnInit {
   }
 
   getTodaysElement(): PeriodicElement {
-    const epoch = new Date(2022, 0);
-    const start = new Date(epoch);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    let index = 0;
-    while (start < today) {
-      index++;
-      start.setDate(start.getDate() + 1);
-    }
-
     const symbols = Object.keys(elements);
-    const symbol = symbols[index % symbols.length];
+    const today = new Date().toLocaleDateString('en-GB');
+    const rng = seedrandom(environment.salt + today);
+    const randNum = rng();
+    const index = Math.floor(randNum * symbols.length);
+    const symbol = symbols[index];
     const elem = elements[symbol];
     return elem;
   }
