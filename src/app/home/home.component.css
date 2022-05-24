@@ -124,3 +124,9 @@ button:active {
 button:disabled {
   opacity: 0.5;
 }
+
+.play-again {
+  font-size: 1.5em;
+  margin-top: 15px;
+  text-align: center;
+}

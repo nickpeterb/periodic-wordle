@@ -33,25 +33,26 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     this.answer = this.getTodaysElement();
+    this.msg = 'Take a guess...';
   }
 
   ngOnInit(): void {
     this.setStartSuggestion();
     const hasPlayed = localStorage.getItem('played');
     const hasState = localStorage.getItem('state');
-    if (hasState !== null) this.restoreState();
     if (hasPlayed !== null) {
       const lastPlayed = parseInt(hasPlayed);
       const datePlayed = new Date(lastPlayed).toLocaleDateString('en-GB');
       const today = new Date().toLocaleDateString('en-GB');
       if (datePlayed === today) {
+        if (hasState !== null) this.restoreState();
         this.suggestedElem = this.answer;
         this.inputFormControl.setValue(this.answer.symbol);
       } else {
         localStorage.removeItem('played');
         this.clearState();
       }
-    }
+    } else if (hasState !== null) this.restoreState();
     if (!environment.production) console.log('answer', this.answer.symbol);
   }
 
@@ -106,7 +107,7 @@ export class HomeComponent implements OnInit {
     this.guessesLeft -= 1;
 
     if (this.guessesLeft === 0 && guessSym !== this.answer.symbol) {
-      this.msg = 'Sorry, the answer was';
+      this.msg = 'Sorry, the answer was...';
       this.suggestedElem = this.answer;
       this.inputFormControl.setValue(this.answer.symbol);
       this.endGame();
@@ -127,9 +128,10 @@ export class HomeComponent implements OnInit {
       if (this.answer.category === guessElem.category) {
         catText = 'Correct';
         this.hasCorrCat = true;
-        answerMass > guessMass
-          ? (this.tooLowHigh[0] = guessMass)
-          : (this.tooLowHigh[1] = guessMass);
+        if (answerMass > guessMass && guessMass > this.tooLowHigh[0])
+          this.tooLowHigh[0] = guessMass;
+        if (answerMass < guessMass && guessMass < this.tooLowHigh[1])
+          this.tooLowHigh[1] = guessMass;
       } else {
         catText = 'Wrong';
         this.badCategories.push(guessElem.category);
@@ -148,6 +150,9 @@ export class HomeComponent implements OnInit {
     this.isDone = true;
     const now = new Date().getTime().toString();
     localStorage.setItem('played', now);
+    // Only highlight correct elem
+    this.tooLowHigh = [this.answer.number - 1, this.answer.number + 1];
+    this.hasCorrCat = true;
     this.updateState();
   }
 
