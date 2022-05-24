@@ -25,3 +25,18 @@
 .show-table:hover {
   cursor: pointer;
 }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 30px;
+  padding: 5px 15px;
+  background-color: grey;
+  color: black;
+  text-align: center;
+}
+
+.footer a {
+  color: black;
+}
