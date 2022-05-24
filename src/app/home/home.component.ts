@@ -95,7 +95,6 @@ export class HomeComponent implements OnInit {
   guess(e?: Event) {
     if (e) e.preventDefault();
     const input: string = this.inputFormControl.value;
-    console.log(input);
     const guessSym =
       input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
     const guessElem = elements[guessSym];
